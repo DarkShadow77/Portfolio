@@ -1,0 +1,67 @@
+/* Page-level rules the inline styles can't express: resets, keyframes,
+   hover states and the responsive overrides. Design tokens live in
+   nocturne.css. */
+
+html { scroll-behavior: smooth; }
+body { margin: 0; overflow-x: hidden; background: var(--color-bg); }
+#root { isolation: isolate; }
+a { color: var(--color-accent); }
+a:hover { color: var(--color-accent-300); }
+img { display: block; max-width: 100%; }
+
+@keyframes noct-caret { 0%, 49% { opacity: 1 } 50%, 100% { opacity: 0 } }
+@keyframes noct-cue { 0% { transform: translateY(-14px); opacity: 0 } 40% { opacity: 1 } 100% { transform: translateY(22px); opacity: 0 } }
+@keyframes noct-spin3d { from { transform: rotateX(-22deg) rotateY(0deg) } to { transform: rotateX(-22deg) rotateY(360deg) } }
+@keyframes noct-breathe { 0%, 100% { opacity: .35; transform: scale(1) } 50% { opacity: .7; transform: scale(1.06) } }
+@keyframes noct-sweep { 0% { transform: translateY(-100%) } 100% { transform: translateY(600%) } }
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--color-bg); }
+::-webkit-scrollbar-thumb { background: var(--color-neutral-800); border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-neutral-700); }
+
+[data-storelink]:hover {
+  background: color-mix(in srgb, var(--color-accent) 16%, transparent);
+  color: var(--color-accent-200);
+}
+[data-dialog-close]:hover {
+  background: color-mix(in srgb, var(--color-accent) 16%, transparent);
+  color: var(--color-accent-200);
+}
+[data-navlink]:hover { color: var(--color-text); }
+
+[data-menu][data-open="false"] { visibility: hidden; transition: visibility 0s linear .35s; }
+[data-menu][data-open="true"] { visibility: visible; }
+
+/* ── tablet and phone ─────────────────────────────────────────────────── */
+@media (max-width: 859px) {
+  [data-navwrap] { display: none !important; }
+  [data-menu-btn] { display: inline-flex !important; }
+  [data-menu] { display: flex !important; }
+
+  [data-herotoggle] {
+    left: 32px; right: 32px !important; bottom: 20px !important;
+    flex-direction: row !important; align-items: center !important;
+    justify-content: space-between;
+  }
+
+  [data-dialog-panel] { grid-template-columns: 1fr !important; overflow-y: auto; }
+  [data-dialog-shotpane] { min-height: 34svh !important; }
+  [data-dialog-shotpane] > div { inset: 18px !important; }
+}
+
+@media (max-width: 479px) {
+  [data-pad] { padding-left: 20px !important; padding-right: 20px !important; }
+  [data-herotoggle] { left: 20px; right: 20px !important; }
+  [data-scrollcue] { display: none !important; }
+  [data-dialog-textpane] { padding: 22px 20px 26px !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
