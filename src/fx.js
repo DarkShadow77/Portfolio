@@ -204,8 +204,25 @@ export default class PortfolioFX {
       mx = -999; my = -999;
     }, { passive: true });
 
-    let painted = 0, cleared = false;
+    let painted = 0, cleared = false, hiddenForModal = false;
     this.loop(() => {
+      // A dialog's backdrop-filter blur has to recomposite every frame this
+      // canvas repaints above it — pausing here is what keeps that cheap.
+      if (this.props.modalOpen) {
+        if (!hiddenForModal) {
+          hiddenForModal = true;
+          cv.style.display = 'none';
+          if (ring) ring.style.display = 'none';
+          showNative();
+        }
+        return;
+      }
+      if (hiddenForModal) {
+        hiddenForModal = false;
+        painted = 0;
+        cv.style.display = '';
+        if (ring) ring.style.display = '';
+      }
       const now = performance.now();
       const c = this.accentRGB(), cr = c[0], cg = c[1], cb = c[2];
       const idle = !pts.length && !rings.length && !parts.length;

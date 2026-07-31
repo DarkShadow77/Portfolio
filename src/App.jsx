@@ -3,8 +3,7 @@ import PortfolioFX from "./fx";
 import { apps } from "./data/apps";
 import AppCard from "./components/AppCard";
 import AppDialog from "./components/AppDialog";
-
-const RESUME = "/David_Adeshina_Flutter_CV.pdf";
+import ResumeMenu from "./components/ResumeMenu";
 
 export default function App() {
   const [heroMode, setHeroMode] = useState("lattice");
@@ -30,6 +29,10 @@ export default function App() {
     return () => { document.body.style.overflow = ""; };
   }, [active]);
 
+  useEffect(() => {
+    if (fx.current) fx.current.setProps({ ...fx.current.props, modalOpen: !!active });
+  }, [active]);
+
   return (
     <>
       <div style={{ "position": "relative", "background": "var(--color-bg)", "color": "var(--color-text)", "fontFamily": "var(--font-body)", "minHeight": "100svh", "overflow": "hidden" }}>
@@ -51,7 +54,7 @@ export default function App() {
             <a data-navlink="" href="#experience" style={{ "fontSize": "12.5px", "letterSpacing": ".09em", "textTransform": "uppercase", "textDecoration": "none", "color": "var(--color-neutral-500)", "transition": "color .25s ease" }}>Experience</a>
             <a data-navlink="" href="#work" style={{ "fontSize": "12.5px", "letterSpacing": ".09em", "textTransform": "uppercase", "textDecoration": "none", "color": "var(--color-neutral-500)", "transition": "color .25s ease" }}>Work</a>
             <a data-navlink="" href="#contact" style={{ "fontSize": "12.5px", "letterSpacing": ".09em", "textTransform": "uppercase", "textDecoration": "none", "color": "var(--color-neutral-500)", "transition": "color .25s ease" }}>Contact</a>
-            <a className="btn btn-primary" data-magnet="" href="/David_Adeshina_Flutter_CV.pdf" download style={{ "marginLeft": "4px" }}><i className="ph ph-download-simple" style={{ "fontSize": "15px" }}></i>Résumé</a>
+            <ResumeMenu style={{ marginLeft: "4px" }} />
           </nav>
           <button
             data-menu-btn=""
@@ -77,7 +80,7 @@ export default function App() {
           <a href="#work" onClick={() => setMenuOpen(false)} style={{ display: "flex", alignItems: "center", minHeight: "48px", fontSize: "15px", letterSpacing: ".02em", textDecoration: "none", color: "var(--color-neutral-300)", borderBottom: "1px solid var(--color-divider)" }}>Work</a>
           <a href="#education" onClick={() => setMenuOpen(false)} style={{ display: "flex", alignItems: "center", minHeight: "48px", fontSize: "15px", letterSpacing: ".02em", textDecoration: "none", color: "var(--color-neutral-300)", borderBottom: "1px solid var(--color-divider)" }}>Education</a>
           <a href="#contact" onClick={() => setMenuOpen(false)} style={{ display: "flex", alignItems: "center", minHeight: "48px", fontSize: "15px", letterSpacing: ".02em", textDecoration: "none", color: "var(--color-neutral-300)" }}>Contact</a>
-          <a className="btn btn-primary" href={RESUME} download onClick={() => setMenuOpen(false)} style={{ marginTop: "14px", justifyContent: "center", minHeight: "48px", fontSize: "15px" }}><i className="ph ph-download-simple" style={{ fontSize: "16px" }} />Résumé</a>
+          <ResumeMenu block align="left" onSelect={() => setMenuOpen(false)} style={{ marginTop: "14px", justifyContent: "center", minHeight: "48px", fontSize: "15px" }} />
         </div>
       </header>
       
@@ -534,7 +537,7 @@ export default function App() {
           </div>
       
           <div data-reveal="" style={{ "marginTop": "34px" }}>
-            <a className="btn btn-primary" data-magnet="" href="/David_Adeshina_Flutter_CV.pdf" download style={{ "padding": "11px 22px", "fontSize": "14.5px" }}><i className="ph ph-download-simple" style={{ "fontSize": "16px" }}></i>Download the résumé</a>
+            <ResumeMenu label="Download the résumé" align="left" style={{ padding: "11px 22px", fontSize: "14.5px" }} />
           </div>
         </div>
       </section>

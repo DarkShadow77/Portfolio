@@ -158,6 +158,14 @@ figcaption {
 .btn-icon { width: 36px; height: 36px; padding: 0; }
 .btn-block { width: 100%; margin-top: var(--space-2); }
 
+.resume-menu-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 10px; border-radius: var(--radius-sm);
+  font-size: 13.5px; color: var(--color-text); text-decoration: none;
+  white-space: nowrap; transition: background .2s ease;
+}
+.resume-menu-item:hover, .resume-menu-item:focus-visible { background: color-mix(in srgb, var(--color-accent) 12%, transparent); }
+
 /* — forms — */
 .field > label {
   display: block; font-size: 12px; margin-bottom: 5px;
